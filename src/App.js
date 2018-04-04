@@ -8,9 +8,11 @@ import Menu from './components/Menu/Menu';
 import 'antd/dist/antd.css';
 
 const FullApp = styled.div`
-  display: grid;
+  margin: 20px;
+  display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 `
 const AppContent = styled.div`
   align-self: flex-start;
@@ -18,7 +20,11 @@ const AppContent = styled.div`
   overflow: scroll;
 `
 const AppMenu = styled.div`
-  align-self: flex-end;
+  border-top: 1px solid lightgrey;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
   height: 50px;
 `
 
