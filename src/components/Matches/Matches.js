@@ -7,8 +7,8 @@ import convertTime from '../../utils/convertTime';
 
 const GroupButtons = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 100px 100px;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 50px;
   align-content: center;
 `
 
@@ -27,7 +27,7 @@ export class Matches extends Component {
     super(props)
   
     this.state = {
-       activeGroup: 'a'
+       activeRound: 'round_16'
     }
   }
   
@@ -36,21 +36,21 @@ export class Matches extends Component {
       <div>
         <h1>Matches</h1>
         <GroupButtons>
-        {this.props.data && Object.keys(this.props.data.groups).map(groupName => (
+        {this.props.data && Object.keys(this.props.data.knockout).map(round => (
           <GroupButton 
-            style={{background: this.state.activeGroup === groupName && '#1890ff'}}
-            key={groupName}
-            onClick={() =>this.setState({activeGroup: groupName})}>{groupName.toUpperCase()}
+            style={{background: this.state.activeRound === round && '#1890ff'}}
+            key={round}
+            onClick={() => this.setState({activeRound: round})}>{this.props.data.knockout[round].name}
           </GroupButton>
           )
         )}
         </GroupButtons>
-        {this.props.data && this.props.data.groups[this.state.activeGroup].matches.map((match, index) => (
+        {this.props.data && this.props.data.knockout[this.state.activeRound].matches.map((match, index) => (
           <div key={match.name}>
             {convertTime(match.date, 'ddd DD-MM-YY HH:mm')}
             <br/>
-            {this.props.data.teams[match.home_team - 1].name} vs. {this.props.data.teams[match.away_team - 1].name}
-            {index !== this.props.data.groups[this.state.activeGroup].matches.length - 1 && <hr/>}
+            {match.home_team} vs. {match.away_team}
+            {index !== this.props.data.knockout[this.state.activeRound].matches.length - 1 && <hr/>}
           </div>
           )
         )}

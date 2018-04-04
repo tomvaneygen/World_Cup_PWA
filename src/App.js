@@ -12,7 +12,7 @@ import { withRouter } from 'react-router';
 import 'antd/dist/antd.css';
 
 const FullApp = styled.div`
-  margin: 20px 20px 50px 20px;
+  margin: 20px 20px 55px 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
