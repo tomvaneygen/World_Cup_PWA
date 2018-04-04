@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const GroupButtons = styled.div`
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 100px 100px;
   align-content: center;
 `
@@ -36,6 +36,7 @@ export class Matches extends Component {
         <GroupButtons>
         {this.props.data && Object.keys(this.props.data.groups).map(groupName => (
           <GroupButton 
+            style={{background: this.state.activeGroup === groupName && '#1890ff'}}
             key={groupName}
             onClick={() =>this.setState({activeGroup: groupName})}>{groupName.toUpperCase()}
           </GroupButton>

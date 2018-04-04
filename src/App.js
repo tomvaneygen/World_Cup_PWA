@@ -12,17 +12,15 @@ import { withRouter } from 'react-router';
 import 'antd/dist/antd.css';
 
 const FullApp = styled.div`
-  margin: 20px;
+  margin: 20px 20px 50px 20px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   overflow: hidden;
 `
 const AppContent = styled.div`
   align-self: flex-start;
   flex: 1;
   width: 100%;
-  margin-bottom: 50px;
 `
 const AppMenu = styled.div`
   border-top: 1px solid lightgrey;
