@@ -1,7 +1,7 @@
 import React from 'react'
 import { Menu, Icon } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 import styled from 'styled-components';
 
 const StyledMenu = styled(Menu)`

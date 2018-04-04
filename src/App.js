@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actions from './store/actions';
 import styled from 'styled-components';
 import Home from './components/Home/Home';
 import Matches from './components/Matches/Matches';
 import Poules from './components/Poules/Poules';
 import Menu from './components/Menu/Menu';
+import { withRouter } from 'react-router';
 import 'antd/dist/antd.css';
 
 const FullApp = styled.div`
@@ -16,8 +20,9 @@ const FullApp = styled.div`
 `
 const AppContent = styled.div`
   align-self: flex-start;
-  height: calc(100vh - 50px);
-  overflow: scroll;
+  flex: 1;
+  width: 100%;
+  margin-bottom: 50px;
 `
 const AppMenu = styled.div`
   border-top: 1px solid lightgrey;
@@ -29,6 +34,11 @@ const AppMenu = styled.div`
 `
 
 class App extends Component {
+  componentDidMount = () => {
+    this.props.actions.fetchData()
+  }
+  
+
   render() {
     return (
       <FullApp className="App">
@@ -45,4 +55,19 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    data: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App));
