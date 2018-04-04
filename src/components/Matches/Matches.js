@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../../store/actions';
 import styled from 'styled-components';
+import convertTime from '../../utils/convertTime';
 
 const GroupButtons = styled.div`
   display: grid;
@@ -12,12 +13,13 @@ const GroupButtons = styled.div`
 `
 
 const GroupButton = styled.div`
+  border-radius: 5px;
   display: flex;
   margin: 5px;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  background: grey;
+  background: lightgrey;
 `
 
 export class Matches extends Component {
@@ -43,10 +45,12 @@ export class Matches extends Component {
           )
         )}
         </GroupButtons>
-        {this.props.data && this.props.data.groups[this.state.activeGroup].matches.map((match) => (
+        {this.props.data && this.props.data.groups[this.state.activeGroup].matches.map((match, index) => (
           <div key={match.name}>
-            <p>{match.date}</p>
-            <p>{this.props.data.teams[match.home_team - 1].name} vs. {this.props.data.teams[match.away_team - 1].name}</p>
+            {convertTime(match.date, 'ddd DD-MM-YY HH:mm')}
+            <br/>
+            {this.props.data.teams[match.home_team - 1].name} vs. {this.props.data.teams[match.away_team - 1].name}
+            {index !== this.props.data.groups[this.state.activeGroup].matches.length - 1 && <hr/>}
           </div>
           )
         )}
