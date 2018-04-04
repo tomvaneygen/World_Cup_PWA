@@ -1,26 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { Radio } from 'antd'
 import * as actions from '../../store/actions';
-import styled from 'styled-components';
 import convertTime from '../../utils/convertTime';
 
-const GroupButtons = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 50px 50px;
-  align-content: center;
-`
-
-const GroupButton = styled.div`
-  border-radius: 5px;
-  display: flex;
-  margin: 5px;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  background: lightgrey;
-`
+const RadioGroup = Radio.Group
+const RadioButton = Radio.Button
 
 export class Poules extends Component {
   constructor(props) {
@@ -31,20 +17,27 @@ export class Poules extends Component {
     }
   }
 
+  handleGroupChange = e => {
+    this.setState(
+      {activeGroup: e.target.value}
+    )
+  }
+
   render() {
     return (
       <div>
       <h1>Poules</h1>
-      <GroupButtons>
+      <RadioGroup onChange={this.handleGroupChange} defaultValue={this.state.activeGroup} style={{display: 'flex', flexFlow: 'row wrap'}}>
         {this.props.data && Object.keys(this.props.data.groups).map(groupName => (
-          <GroupButton 
-            style={{background: this.state.activeGroup === groupName && '#1890ff'}}
+          <RadioButton
+          style={{width: '25%', textAlign: 'center'}}
             key={groupName}
-            onClick={() =>this.setState({activeGroup: groupName})}>{groupName.toUpperCase()}
-          </GroupButton>
+            value={groupName}
+            >{groupName.toUpperCase()}
+          </RadioButton>
           )
         )}
-        </GroupButtons>
+        </RadioGroup>
         {this.props.data && this.props.data.groups[this.state.activeGroup].matches.map((match, index) => (
           <div key={match.name}>
             {convertTime(match.date, 'ddd DD-MM-YY HH:mm')}

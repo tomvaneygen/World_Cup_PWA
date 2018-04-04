@@ -15,7 +15,6 @@ const FullApp = styled.div`
   margin: 20px 20px 55px 20px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 `
 const AppContent = styled.div`
   align-self: flex-start;

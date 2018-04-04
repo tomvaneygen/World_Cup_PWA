@@ -1,26 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { Radio } from 'antd'
 import * as actions from '../../store/actions';
 import styled from 'styled-components';
 import convertTime from '../../utils/convertTime';
 
-const GroupButtons = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 50px;
-  align-content: center;
-`
+const RadioGroup = Radio.Group
+const RadioButton = Radio.Button
 
-const GroupButton = styled.div`
-  border-radius: 5px;
-  display: flex;
-  margin: 5px;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  background: lightgrey;
-`
 
 export class Matches extends Component {
   constructor(props) {
@@ -30,21 +18,28 @@ export class Matches extends Component {
        activeRound: 'round_16'
     }
   }
+
+  handleRoundChange = e => {
+    this.setState(
+      {activeRound: e.target.value}
+    )
+  }
   
   render() {
     return (
       <div>
         <h1>Matches</h1>
-        <GroupButtons>
+        <RadioGroup defaultValue={this.state.activeRound} onChange={this.handleRoundChange} style={{display: 'flex', flexFlow: 'column nowrap', justifyContent: 'center'}}>
         {this.props.data && Object.keys(this.props.data.knockout).map(round => (
-          <GroupButton 
-            style={{background: this.state.activeRound === round && '#1890ff'}}
+          <RadioButton 
+            style={{ textAlign: 'center', width: '100%'}}
             key={round}
-            onClick={() => this.setState({activeRound: round})}>{this.props.data.knockout[round].name}
-          </GroupButton>
+            value={round}
+            >{this.props.data.knockout[round].name}
+          </RadioButton>
           )
         )}
-        </GroupButtons>
+        </RadioGroup>
         {this.props.data && this.props.data.knockout[this.state.activeRound].matches.map((match, index) => (
           <div key={match.name}>
             {convertTime(match.date, 'ddd DD-MM-YY HH:mm')}
