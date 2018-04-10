@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { Radio } from 'antd'
 import * as actions from '../../store/actions';
-import styled from 'styled-components';
 import convertTime from '../../utils/convertTime';
 
 const RadioGroup = Radio.Group
