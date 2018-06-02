@@ -4,11 +4,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from './store/actions';
 import styled from 'styled-components';
-import Home from './components/Home/Home';
-import Matches from './components/Matches/Matches';
-import Poules from './components/Poules/Poules';
 import Menu from './components/Menu/Menu';
 import { withRouter } from 'react-router';
+import Loadable from './utils/loadable';
 import 'antd/dist/antd.css';
 
 const FullApp = styled.div`
@@ -30,6 +28,21 @@ const AppMenu = styled.div`
   height: 50px;
 `
 
+const AsyncHome = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "home" */ './components/Home/Home'),
+});
+
+const AsyncMatches = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "matches" */ './components/Matches/Matches'),
+});
+
+const AsyncPoules = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "poules" */ './components/Poules/Poules'),
+});
+
 class App extends Component {
   componentDidMount = () => {
     this.props.actions.fetchData()
@@ -40,9 +53,9 @@ class App extends Component {
     return (
       <FullApp className="App">
         <AppContent>
-          <Route path='/' exact component={Home}/>
-          <Route path='/matches' component={Matches}/>
-          <Route path='/poules' component={Poules}/>
+          <Route path='/' exact component={AsyncHome}/>
+          <Route path='/matches' component={AsyncMatches}/>
+          <Route path='/poules' component={AsyncPoules}/>
         </AppContent>
         <AppMenu>
           <Menu />
